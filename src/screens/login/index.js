@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useUser } from '../contexts/UserContext';
+import { useUser } from '../../contexts/UserContext';
+
+// Styles
+import './styles.sass';
+
+// FA
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'; 
 
 function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState('');
@@ -42,32 +49,40 @@ function Login({ onLoginSuccess }) {
   };
 
   return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <h2>Login</h2>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Log In</button>
-      </form>
-      <p>
-        No tienes una cuenta? <Link to="/register">Crear una cuenta</Link>
-      </p>
+    <div className='LoginScreen'>
+      <div className='Left'>
+        <form onSubmit={handleLogin} className='Form'>
+          <h2>Login</h2>
+          <p>Ingresa para acceder a las funciones de Coding Coach</p>
+          <div className='Input'>
+            <label><FontAwesomeIcon icon={faUser} /></label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder='Email'
+            />
+          </div>
+          <div className='Input'>
+            <label><FontAwesomeIcon icon={faLock} /></label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              placeholder='Contraseña'
+            />
+          </div>
+          <button className='Button' type="submit">Ingresar</button>
+        </form>
+        <p>
+          No tienes una cuenta? <Link to="/register">Crear una cuenta</Link>
+        </p>
+      </div>
+      <div className='Right'>
+        <h1>Coding Coach</h1>
+      </div>
     </div>
   );
 }
