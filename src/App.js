@@ -1,29 +1,36 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Login from './components/Login';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { UserProvider } from './contexts/UserContext';
+
+// External Components
+import { ToastContainer } from 'react-toastify';
+import TransitionWrapper from './components/TransitionWrapper';
+
+// Screens
+import Login from './screens/login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import InterviewSimulator from './components/InterviewSimulator';
 import CodeEditor from './components/CodeEditor';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Asegúrate de importar los estilos de Toastify
-import { UserProvider } from './contexts/UserContext';
+import LoadingScreen from './screens/loading';
+
+// Custom
+import 'react-toastify/dist/ReactToastify.css';
+
+// Styles
+import './App.sass';
 
 export function App() {
   return (
     <UserProvider>
       <Router>
-        <div>
-          <ToastContainer />
-          <h1>Bienvenido a Coding Coach</h1>
+        <ToastContainer />
+        <TransitionWrapper>
           <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/interview" element={<InterviewSimulator />} />
-            <Route path="/editor" element={<CodeEditor />} />
+            <Route path="/" element={<LoadingScreen />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
-        </div>
+        </TransitionWrapper>
       </Router>
     </UserProvider>
   );

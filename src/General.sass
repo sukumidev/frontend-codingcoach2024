@@ -1,0 +1,49 @@
+$font-color-focus: #203A43
+$font-color-disabled: rgb(177, 177, 177)
+$font-color-clear: rgb(238, 241, 245)
+$font-color-dark: rgb(51, 51, 51)
+
+$back-color-primary: rgb(255, 248, 234)
+$back-color-focus: rgb(97, 83, 55)
+
+$font-family-content: 'Montserrat', sans-serif
+$font-family-nav: "Barlow", sans-serif
+$font-family-crazy: 'Whisper', cursive
+
+$menu-back-color: #BF7E04
+
+@mixin Darktheme()
+  background: #0F2027  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027)  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2C5364, #203A43, #0F2027) /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+@mixin Cleartheme()
+  background: #CED7DE
+
+@mixin flex($direction: row, $justify: center, $items: center)
+  display: flex
+  flex-direction: $direction
+  justify-content: $justify
+  align-items: $items
+
+@mixin w-h($width: 100%, $height: 100%)
+  width: $width
+  height: $height
+
+@mixin OverwriteButton($color: white)
+  border: none
+  background-color: transparent
+  color: $color
+  cursor: pointer
+
+@mixin grid($colums: 4, $gap: 10px)
+  display: grid
+  grid-template-columns: repeat($colums, auto)
+  grid-gap: $gap
+  grid-auto-rows: minmax(100px, auto)
+
+@mixin BoxShadow($horizontalShadowLenght: 2px, $verticalShadowLenght: 4px, $blurRadius: 10px, $spreadRadius: 0, $shadowColor: black)
+  box-shadow: $horizontalShadowLenght $verticalShadowLenght $blurRadius $spreadRadius $shadowColor
+  -webkit-box-shadow: $horizontalShadowLenght $verticalShadowLenght $blurRadius $spreadRadius $shadowColor
+  -moz-box-shadow: $horizontalShadowLenght $verticalShadowLenght $blurRadius $spreadRadius $shadowColor
