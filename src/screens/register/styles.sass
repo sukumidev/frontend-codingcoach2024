@@ -1,0 +1,32 @@
+@use '../../General'
+
+.RegisterScreen
+  @include General.w-h($width: 100%, $height: 100%)
+  @include General.flex($direction: column, $justify: center, $items: center)
+  justify-content: center
+  align-items: center
+  @include General.Cleartheme()
+
+  form
+    width: 70%
+    max-width: 500px
+    @include General.flex($direction: column, $justify: center, $items: center)
+    
+    .Input
+      @include General.w-h($width: 100%, $height: 30px)
+      @include General.flex($direction: row, $justify: center, $items: center)
+      background-color: white
+      margin-bottom: 20px
+      border-radius: 5px
+      padding: 5px
+
+      input
+        box-sizing: border-box
+        background-color: transparent
+        border: none
+
+      label
+        @include General.flex($direction: row, $justify: center, $items: center)
+        @include General.w-h($width: 20px, $height: 20px) 
+
+
