@@ -8,7 +8,7 @@ import TransitionWrapper from './components/TransitionWrapper';
 
 // Screens
 import Login from './screens/login';
-import Register from './components/Register';
+import Register from './screens/register';
 import Dashboard from './components/Dashboard';
 import InterviewSimulator from './components/InterviewSimulator';
 import CodeEditor from './components/CodeEditor';
@@ -29,6 +29,7 @@ export function App() {
           <Routes>
             <Route path="/" element={<LoadingScreen />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </TransitionWrapper>
       </Router>
