@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleRight } from '@fortawesome/free-solid-svg-icons'; 
+import './styles.sass';
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -16,7 +19,7 @@ const Chatbot = () => {
     setMessages(prevMessages => [...prevMessages, userMessage]);
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/chat', { message: message });
+      const response = await axios.post('https://api-codingcoach-kjuzq4ogha-uc.a.run.app/chat', { message: message });
       const botMessage = { sender: 'bot', text: response.data.response };
       setMessages(prevMessages => [...prevMessages, botMessage]);
 
@@ -34,7 +37,7 @@ const Chatbot = () => {
   };
 
   return (
-    <div>
+    <div className='Chatbot'>
       <div>
         {messages.map((msg, index) => (
           <div key={index} className={msg.sender}>
@@ -42,15 +45,20 @@ const Chatbot = () => {
           </div>
         ))}
       </div>
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') sendMessage(input);
-        }}
-      />
-      <button onClick={() => sendMessage(input)}>Send</button>
+      <div className='Input'>
+        <input
+          type="text"
+          value={input}
+          placeholder='Escribe tu mensaje'
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') sendMessage(input);
+          }}
+        />
+        <button className='Send' onClick={() => sendMessage(input)}>
+          <p><FontAwesomeIcon icon={faCircleRight} /></p>
+        </button>
+      </div>
       <div>Total Score: {score}</div>
     </div>
   );

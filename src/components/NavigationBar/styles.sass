@@ -1,0 +1,13 @@
+@use '../../General'
+
+.NavigationBar
+  @include General.w-h($width: 100%, $height: General.$navbar-height)
+  @include General.flex($direction: row, $justify: space-between, $items: center)
+  background-color: General.$back-color-primary
+  padding: 20px
+  box-sizing: border-box
+
+  p
+    box-sizing: border-box
+    width: 100px
+    text-align: center

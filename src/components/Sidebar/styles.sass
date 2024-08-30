@@ -1,0 +1,34 @@
+@use '../../General'
+
+.Sidebar
+  @include General.w-h($width:  General.$sidebar-width, $height: 100%)
+  @include General.flex($direction: column, $justify: space-between, $items: center)
+  padding: 20px
+  font-size: 15px
+  box-sizing: border-box
+  background-color: General.$back-color-primary
+
+  .Navigation
+    @include General.flex($direction: column, $justify: space-evenly, $items: flex-start)
+    @include General.w-h($width:  100%, $height: auto)
+    margin-top: 20px
+
+    .option
+      @include General.flex($direction: row, $justify: center, $items: center)
+      padding: 5px
+      font-size: 10px
+      box-sizing: border-box
+      border-radius: 5px
+      cursor: pointer
+
+      p
+        margin-left: 5px
+
+    .selected
+      background-color: General.$font-color-focus
+      color: white
+
+  .Rights
+    font-size: 8px
+
+  
