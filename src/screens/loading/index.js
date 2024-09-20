@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 // Styles
 import './styles.sass';
 
-const LoadingScreen = () => {
+const Loading = () => {
     const navigate = useNavigate();
   const [fadeIn, setFadeIn] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
@@ -35,4 +35,4 @@ const LoadingScreen = () => {
   );
 };
 
-export default LoadingScreen;
+export default Loading;

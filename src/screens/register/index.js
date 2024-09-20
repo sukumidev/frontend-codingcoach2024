@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
+import { register as authRegister } from '../../services/Auth';
 
 // Styles
 import './styles.sass';
@@ -22,38 +22,12 @@ function Register({ onRegisterSuccess }) {
   const handleRegister = async (event) => {
     event.preventDefault();
 
-    const userData = {
-      name,
-      email,
-      password,
-      age: parseInt(age, 10)
-    };
-
     try {
-      const response = await axios.post('http://127.0.0.1:5000/create_user', userData);
-      console.log('Register Success:', response.data);
-      setUser(response.data);
+      const userData = await authRegister(name, email, password, age); 
+      setUser(userData);
       navigate('/dashboard');
-      toast.success('Registro exitoso!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
     } catch (error) {
-      console.error('Register Error:', error.response ? error.response.data : error.message);
-      toast.error('Error en el registro: ' + (error.response ? error.response.data.message : error.message), {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      console.error('Register Error:', error.message);
     }
   };
 

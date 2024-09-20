@@ -4,16 +4,17 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate para la redirección
+import { useNavigate } from 'react-router-dom';
+import { logout as authLogout } from '../../services/Auth'; // Importar el logout de auth.js
 import './styles.sass';
 
 export function NavigationBar() {
-  const { user, logout } = useUser(); // Asegúrate de tener una función logout en el UserContext
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { user, logout } = useUser(); // Función logout del contexto
+  const [anchorEl, setAnchorEl] = useState(null);
   const currentPage = useSelector((state) => state.page.currentPage);
   const open = Boolean(anchorEl);
   const [pageName, setPageName] = useState(null);
-  const navigate = useNavigate(); // Hook para la navegación
+  const navigate = useNavigate();
 
   useEffect(() => {
     setPageName(currentPage);
@@ -29,14 +30,9 @@ export function NavigationBar() {
 
   const handleLogout = async () => {
     try {
-      await fetch('https://api-codingcoach-kjuzq4ogha-uc.a.run.app/logout', {
-        method: 'POST', 
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      logout();
-      navigate('/login');
+      await authLogout(); // Llamar a la función logout desde auth.js
+      logout(); // Limpiar el estado del usuario en el contexto
+      navigate('/login'); // Redirigir a la página de login
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
@@ -68,8 +64,8 @@ export function NavigationBar() {
         }}
       >
         <MenuItem onClick={() => {
-          handleLogout();
-          handleClose(); 
+          handleLogout(); // Cerrar sesión
+          handleClose(); // Cerrar el menú
         }}>Logout</MenuItem>
       </Menu>
     </div>

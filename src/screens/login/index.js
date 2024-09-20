@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useUser } from '../../contexts/UserContext';
+import { login } from '../../services/Auth';
 
 // Styles
 import './styles.sass';
@@ -11,7 +10,7 @@ import './styles.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'; 
 
-function Login({ onLoginSuccess }) {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setUser } = useUser();
@@ -21,30 +20,12 @@ function Login({ onLoginSuccess }) {
     event.preventDefault();
 
     try {
-      const response = await axios.post('https://api-codingcoach-kjuzq4ogha-uc.a.run.app/login', { email, password });
-      console.log('Login Success:', response.data);
-      setUser(response.data.user); // Asegúrate de que el backend retorne la información del usuario
-      toast.success('Inicio de sesión exitoso!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      navigate('/dashboard');
+      const data = await login(email, password);
+      setUser(data.user); // Establece el usuario en el contexto
+      navigate('/dashboard'); // Navega al dashboard
     } catch (error) {
-      console.error('Login Error:', error.response ? error.response.data : error.message);
-      toast.error('Error en el inicio de sesión: ' + (error.response ? error.response.data.message : error.message), {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      console.error('Login Error:', error.message);
+      // Los errores ya se manejan con toast en el servicio, así que no es necesario duplicar el manejo aquí.
     }
   };
 

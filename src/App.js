@@ -13,13 +13,13 @@ import { SideBar } from './components/Sidebar';
 
 
 // Screens
-import Login from './screens/login';
-import Register from './screens/register';
-import Dashboard from './screens/dashboard';
+import Login from './screens/Login';
+import Register from './screens/Register';
+import Dashboard from './screens/Dashboard';
 import InterviewSimulator from './components/InterviewSimulator';
 import CodeEditor from './components/CodeEditor';
-import LoadingScreen from './screens/loading';
-import Chatbot from './screens/chatbot';
+import Loading from './screens/Loading';
+import Chatbot from './screens/Chatbot';
 
 // Custom
 import 'react-toastify/dist/ReactToastify.css';
@@ -56,7 +56,8 @@ export function RouterLayout() {
       <Routes>
           <Route element={<SimpleLayout />}>
             <Route path="/login" element={<Login />} />
-            <Route path="*" element={<LoadingScreen />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<Loading />} />
           </Route>
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
