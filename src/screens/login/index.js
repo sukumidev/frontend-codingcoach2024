@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
-import { login } from '../../services/Auth';
+import { login as loginService } from '../../services/Auth';
 
 // Styles
 import './styles.sass';
@@ -20,7 +20,7 @@ function Login() {
     event.preventDefault();
 
     try {
-      const data = await login(email, password);
+      const data = await loginService(email, password);
       setUser(data.user); // Establece el usuario en el contexto
       navigate('/dashboard'); // Navega al dashboard
     } catch (error) {

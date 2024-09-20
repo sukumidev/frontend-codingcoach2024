@@ -11,7 +11,6 @@ import TransitionWrapper from './components/TransitionWrapper';
 import { NavigationBar } from "./components/NavigationBar";
 import { SideBar } from './components/Sidebar';
 
-
 // Screens
 import Login from './screens/Login';
 import Register from './screens/Register';

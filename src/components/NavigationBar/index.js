@@ -9,7 +9,7 @@ import { logout as authLogout } from '../../services/Auth'; // Importar el logou
 import './styles.sass';
 
 export function NavigationBar() {
-  const { user, logout } = useUser(); // Función logout del contexto
+  const { user, logout } = useUser();
   const [anchorEl, setAnchorEl] = useState(null);
   const currentPage = useSelector((state) => state.page.currentPage);
   const open = Boolean(anchorEl);

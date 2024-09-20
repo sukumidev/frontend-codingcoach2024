@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { host } from './config';
 
-const host = 'https://api-codingcoach-kjuzq4ogha-uc.a.run.app';
+export const isUserLoggedIn = () => {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;  
+};
 
 export const login = async (email, password) => {
     try {
@@ -15,7 +19,8 @@ export const login = async (email, password) => {
             draggable: true,
             progress: undefined,
         });
-        return response.data; // Devuelve los datos al componente que lo llama
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        return response.data; 
     } catch (error) {
         toast.error('Error en el inicio de sesión: ' + (error.response?.data?.message || error.message), {
             position: "top-right",
@@ -42,6 +47,8 @@ export const logout = async () => {
             draggable: true,
             progress: undefined,
         });
+        localStorage.removeItem('user');
+        return;
     } catch (error) {
         toast.error('Error al cerrar sesión: ' + (error.response?.data?.message || error.message), {
             position: "top-right",
@@ -68,6 +75,7 @@ export const register = async (name, email, password, age) => {
             draggable: true,
             progress: undefined,
         });
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         return response.data;
     } catch (error) {
         toast.error('Error en el registro: ' + (error.response?.data?.message || error.message), {

@@ -1,36 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../contexts/UserContext'; 
 
 // Styles
 import './styles.sass';
 
 const Loading = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { user } = useUser(); 
   const [fadeIn, setFadeIn] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    setFadeIn(true); // Inicia el fade-in al montar el componente
-
+    setFadeIn(true);
     const fadeOutTimer = setTimeout(() => {
-      setFadeIn(false); // Inicia el fade-out
-      setFadeOut(true); // Aplica clase de fade-out
-    }, 9500); // Espera 4.5 segundos antes de iniciar el fade-out
+      setFadeIn(false);
+      setFadeOut(true);
+    }, 9500);
 
     const navigateTimer = setTimeout(() => {
-      navigate('/login'); // Navega después de la animación fade-out
-    }, 10000); // Navega después de 5 segundos
+      console.log(user)
+      if (user) {
+        navigate('/dashboard'); 
+      } else {
+        navigate('/login'); 
+      }
+    }, 10000);
 
     return () => {
       clearTimeout(fadeOutTimer);
       clearTimeout(navigateTimer);
     };
-  }, [navigate]);
-
+  }, [navigate, user]);
 
   return (
-    <div className={`LoadingScreen`}>
-        <h1>Coding Coach</h1>
+    <div className={`LoadingScreen ${fadeIn ? 'fade-in' : ''} ${fadeOut ? 'fade-out' : ''}`}>
+      <h1>Coding Coach</h1>
     </div>
   );
 };

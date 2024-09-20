@@ -1,0 +1,1 @@
+export const host = 'https://api-codingcoach-kjuzq4ogha-uc.a.run.app';

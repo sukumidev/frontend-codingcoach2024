@@ -1,5 +1,6 @@
+// Chatbot.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { sendChatMessage } from '../../services/ChatServices'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleRight } from '@fortawesome/free-solid-svg-icons'; 
 import './styles.sass';
@@ -19,16 +20,15 @@ const Chatbot = () => {
     setMessages(prevMessages => [...prevMessages, userMessage]);
 
     try {
-      const response = await axios.post('https://api-codingcoach-kjuzq4ogha-uc.a.run.app/chat', { message: message });
-      const botMessage = { sender: 'bot', text: response.data.response };
+      const response = await sendChatMessage(message);
+      const botMessage = { sender: 'bot', text: response.response };
       setMessages(prevMessages => [...prevMessages, botMessage]);
 
-      if (response.data.next) {
-        const botMessageNext = { sender: 'bot', text: response.data.next };
+      if (response.next) {
+        const botMessageNext = { sender: 'bot', text: response.next };
         setMessages(prevMessages => [...prevMessages, botMessageNext]);
       }
     } catch (error) {
-      console.error('Error sending message:', error);
       const botMessage = { sender: 'bot', text: 'Error sending message' };
       setMessages(prevMessages => [...prevMessages, botMessage]);
     }
