@@ -1,8 +1,7 @@
-import axios from 'axios';
 import { host } from './config';
 
 export const sendChatMessage = async (message, isStart, questionId = null, userData = null) => {
-    const url = host; 
+  const url = `${host}/interview`;
   
     // Obtener el token de localStorage
     const token = localStorage.getItem('token');

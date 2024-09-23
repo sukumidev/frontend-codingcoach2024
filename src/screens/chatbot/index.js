@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { sendChatMessage } from '../../services/ChatServices'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleRight } from '@fortawesome/free-solid-svg-icons'; 
@@ -10,7 +10,10 @@ const Chatbot = () => {
   const [experience, setExperience] = useState(''); // Almacena los años de experiencia
   const [technologies, setTechnologies] = useState(''); // Almacena las tecnologías
   const [input, setInput] = useState(''); // Almacena el input del usuario
-  const [messages, setMessages] = useState([{ sender: 'bot', text: 'Bienvenido a la entrevista técnica!' }]);
+  const [messages, setMessages] = useState([
+    { sender: 'bot', text: 'Bienvenido a la entrevista técnica!' },
+    { sender: 'bot', text: '¿En qué lenguaje quieres tu entrevista?' }  // Añadirlo aquí directamente
+  ]);
   const [questionId, setQuestionId] = useState(null); // Almacena el ID de la pregunta actual para enviar las respuestas correctas al backend
 
   // Maneja el envío de respuestas del usuario
@@ -107,9 +110,18 @@ const sendInitialData = async () => {
     }
   };
 
+  const chatWindowRef = useRef(null);  // Usamos una referencia para la ventana de chat
+
+  useEffect(() => {
+    // Hacer scroll hacia abajo cada vez que haya un nuevo mensaje
+    if (chatWindowRef.current) {
+      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+    }
+  }, [messages]);  // Se ejecuta cada vez que cambia el estado de 'messages'
+
   return (
-    <div className='Chatbot'>
-      <div className='ChatWindow'>
+    <div className="Chatbot">
+      <div className="ChatWindow" ref={chatWindowRef}>
         {messages.map((msg, index) => (
           <div key={index} className={msg.sender === 'bot' ? 'BotMessage' : 'UserMessage'}>
             {msg.text}
