@@ -12,13 +12,13 @@ import { NavigationBar } from "./components/NavigationBar";
 import { SideBar } from './components/Sidebar';
 
 // Screens
-import Login from './screens/Login';
-import Register from './screens/Register';
-import Dashboard from './screens/Dashboard';
+import Login from './screens/login';
+import Register from './screens/register';
+import Dashboard from './screens/dashboard';
 import InterviewSimulator from './components/InterviewSimulator';
 import CodeEditor from './components/CodeEditor';
-import Loading from './screens/Loading';
-import Chatbot from './screens/Chatbot';
+import Loading from './screens/loading';
+import Chatbot from './screens/chatbot';
 
 // Custom
 import 'react-toastify/dist/ReactToastify.css';
