@@ -5,6 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleRight } from '@fortawesome/free-solid-svg-icons'; 
 import './styles.sass';
 
+// Definir la clase Mensaje
+class Mensaje {
+  constructor(tipo, mensaje) {
+    this.tipo = tipo;
+    this.mensaje = mensaje;
+    this.enviado = new Date().toLocaleTimeString(); // Hora de envío
+  }
+}
+
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -13,35 +22,59 @@ const Chatbot = () => {
   useEffect(() => {
     // Enviar un mensaje inicial para iniciar la conversación
     sendMessage("start");
+    setScore(0);
   }, []);
 
   const sendMessage = async (message) => {
-    const userMessage = { sender: 'user', text: message };
+    const userMessage = new Mensaje('user', message); // Crear instancia de Mensaje para el usuario
     setMessages(prevMessages => [...prevMessages, userMessage]);
 
     try {
       const response = await sendChatMessage(message);
-      const botMessage = { sender: 'bot', text: response.response };
+      const botMessage = new Mensaje('bot', response.response); // Crear instancia de Mensaje para el bot
       setMessages(prevMessages => [...prevMessages, botMessage]);
 
       if (response.next) {
-        const botMessageNext = { sender: 'bot', text: response.next };
+        const botMessageNext = new Mensaje('bot', response.next); // Siguiente mensaje del bot si existe
         setMessages(prevMessages => [...prevMessages, botMessageNext]);
       }
     } catch (error) {
-      const botMessage = { sender: 'bot', text: 'Error sending message' };
-      setMessages(prevMessages => [...prevMessages, botMessage]);
+      const errorMessage = new Mensaje('error', 'Error sending message'); // Crear instancia de Mensaje para error
+      setMessages(prevMessages => [...prevMessages, errorMessage]);
     }
 
     setInput('');
   };
 
+  // Función que aplica estilos según el tipo y contenido del mensaje
+  const getMessageStyle = (msg) => {
+    const lowerCaseText = msg.mensaje?.toLowerCase();
+    
+    if (msg.tipo === 'user') {
+      return 'userMessage message'; // Clase CSS para mensajes del usuario
+    } else if (msg.tipo === 'error') {
+      return 'errorMessage message'; // Clase CSS para mensajes de error del bot
+    } else if (msg.tipo === 'bot') {
+      return 'botMessage message'; // Clase CSS para mensajes de error del bot
+    }
+    else if (lowerCaseText.includes('score')) {
+      return 'scoreMessage message'; // Clase CSS para mensajes de score del bot
+    }
+    return ''; // Clase vacía si no se encuentra coincidencia
+  };
+
   return (
     <div className='Chatbot'>
-      <div>
+      <div className='Score'>Total Score: {score}</div>
+      <div className='Chat'>
         {messages.map((msg, index) => (
-          <div key={index} className={msg.sender}>
-            {msg.text}
+          <div key={index} className={`${msg.tipo} ${getMessageStyle(msg)}`}>
+            <div className='content'>{msg.mensaje}</div>
+            {
+              msg.tipo !== 'error' ?
+              <div className="timestamp">{msg.enviado}</div>
+              : null
+            }
           </div>
         ))}
       </div>
@@ -59,7 +92,6 @@ const Chatbot = () => {
           <p><FontAwesomeIcon icon={faCircleRight} /></p>
         </button>
       </div>
-      <div>Total Score: {score}</div>
     </div>
   );
 };

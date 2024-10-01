@@ -1,0 +1,46 @@
+@use '../../../General'
+.TopicCard
+    @include General.flex($direction: column, $justify: center, $items: center)
+    background-color: #f9f9f9
+    border: 1px solid #ddd
+    border-radius: 10px
+    padding: 20px
+    width: 300px
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
+    text-align: center
+    margin: 10px
+
+.TopicCard-header
+    width: 50%
+    @include General.flex($direction: column, $justify: center, $items: center)
+
+    .TopicCard-icon
+        @include General.w-h($width: 50px, $height: 50px)
+        @include General.flex($direction: row, $justify: center, $items: center)
+        color: white
+        font-size: 30px
+        border-radius: 50%
+
+    .TopicCard-title
+        font-size: 1.5rem
+        margin: 10px 0
+        color: #333
+
+.TopicCard-description
+    font-size: 1rem
+    color: #666
+    margin-bottom: 20px
+
+.TopicCard-progress
+    width: 100%
+    background-color: #eee
+    border-radius: 5px
+    overflow: hidden
+    height: 20px
+
+.TopicCard-progressBar
+    height: 100%
+    color: white
+    text-align: center
+    line-height: 20px
+    border-radius: 5px
