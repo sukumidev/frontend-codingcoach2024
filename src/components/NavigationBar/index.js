@@ -30,13 +30,13 @@ export function NavigationBar() {
 
   const handleLogout = async () => {
     try {
-      await authLogout(); // Llamar a la función logout desde auth.js
-      logout(); // Limpiar el estado del usuario en el contexto
+      await logout();
       navigate('/login'); // Redirigir a la página de login
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
-  };
+};
+
 
   if (!user) {
     return <div>Loading...</div>;

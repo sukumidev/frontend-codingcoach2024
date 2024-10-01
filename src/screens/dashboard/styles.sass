@@ -2,3 +2,19 @@
 
 .Dashboard
   margin: General.$child-margin
+
+.dashboard-grid 
+  display: flex
+  flex-wrap: wrap  // Permite que las gráficas "brinquen" a la siguiente línea
+  justify-content: space-between  // Espacio entre las gráficas
+
+
+.chart-container 
+  width: 48%  // Cada gráfica ocupará el 48% del ancho del contenedor
+  margin-bottom: 20px  // Separación entre las filas
+
+
+@media (max-width: 768px) 
+  .chart-container 
+    width: 100%  // En pantallas pequeñas, cada gráfica ocupará el 100% del ancho
+  

@@ -48,6 +48,7 @@ export const logout = async () => {
     try {
         // Obtener el token de localStorage
         const token = localStorage.getItem('token');
+        console.log('Token encontrado:', token);
 
         // Si no hay token, lanzar un error
         if (!token) {
