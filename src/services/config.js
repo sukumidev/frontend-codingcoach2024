@@ -1,1 +1,1 @@
-export const host = 'http://127.0.0.1:8080';
+export const host = 'https://api-codingcoach-506206823955.us-central1.run.app';
