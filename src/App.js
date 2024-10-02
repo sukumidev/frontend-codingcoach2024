@@ -15,8 +15,7 @@ import { SideBar } from './components/Sidebar';
 import Login from './screens/login';
 import Register from './screens/register';
 import Dashboard from './screens/dashboard';
-import InterviewSimulator from './components/InterviewSimulator';
-import CodeEditor from './components/CodeEditor';
+import InterviewDetails from './screens/interviewdetails';
 import Loading from './screens/loading';
 import Chatbot from './screens/chatbot';
 
@@ -61,12 +60,14 @@ export function RouterLayout() {
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/chat" element={<Chatbot />} />
+            <Route path="/interview/:id" element={<InterviewDetails />} />  {/* Cambiar component a element */}
           </Route>
       </Routes>
       </TransitionWrapper>
     </>
   );
 }
+
 
 
 export function App() {

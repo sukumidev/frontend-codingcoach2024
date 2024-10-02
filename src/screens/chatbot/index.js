@@ -84,6 +84,12 @@ const Chatbot = () => {
       await sendInitialData(normalizedTechnologies); // Enviamos los datos iniciales al backend
       setStep(3); // Avanzamos al siguiente paso
     }
+    // Llama a sendAnswerToQuestion en el paso 3
+      else if (step === 3) {
+        console.log('Intentando enviar respuesta:', input);
+        await sendAnswerToQuestion(input);  // Llamamos a la función aquí
+      }
+
     
     setInput(''); // Limpiamos el input del usuario después de cada paso
   };
@@ -128,57 +134,66 @@ const Chatbot = () => {
   };
 
   // Enviar la respuesta del usuario para la pregunta técnica
-  const sendAnswerToQuestion = async (answer) => {
-    const body = {
-      answer: answer,  // Aquí se pasa la respuesta capturada del input
-      question_id: questionId
-    };
+  // Enviar la respuesta del usuario para la pregunta técnica
+const sendAnswerToQuestion = async (answer) => {
+  const body = {
+    answer: answer,  // Aquí se pasa la respuesta capturada del input
+    question_id: questionId  // Usamos el `questionId` de la pregunta anterior
+  };
 
-    console.log('Respuesta enviada al backend:', body);
+  console.log('Respuesta enviada al backend:', body);
 
-    try {
-      const response = await sendChatMessage(answer, false, questionId, body); // Enviar respuesta al backend
+  try {
+    const response = await fetch(`${host}/interview`, {  // Cambia la URL a la adecuada si es necesario
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  // Asegúrate de pasar el token si es necesario
+      },
+      body: JSON.stringify(body)  // Enviar solo la respuesta y el question_id
+    });
 
-      if (response.message === "Entrevista finalizada") {
-        // Concatenamos el mensaje final de la entrevista en un solo mensaje con saltos de línea
-        const finalMessage = `Entrevista finalizada.\nPuntuación total: ${response.total_score}\nNivel alcanzado: ${response.level}`;
-        
-        setMessages(prevMessages => [
-          ...prevMessages,
-          { sender: 'bot', text: finalMessage }  // Agregamos un solo mensaje concatenado
-        ]);
+    const responseData = await response.json();
+    console.log('Respuesta del backend:', responseData);
 
-        // Opcional: Desactivar el input si la entrevista ha finalizado
-        setIsInterviewFinished(true);
-      } else {
-        // Mostrar la retroalimentación y la siguiente pregunta, si no es el final de la entrevista
-        setMessages(prevMessages => [
-          ...prevMessages,
-          { sender: 'bot', text: response.feedback }
-        ]);
-
-        if (response.score) {
-          setMessages(prevMessages => [
-            ...prevMessages,
-            { sender: 'bot', text: `Puntuación: ${response.score}` }
-          ]);
-        }
-
-        // Actualizar con la siguiente pregunta
-        setQuestionId(response.question_id);
-        setMessages(prevMessages => [
-          ...prevMessages,
-          { sender: 'bot', text: response.question }
-        ]);
-      }
-    } catch (error) {
+    if (responseData.message === "Entrevista finalizada") {
+      const finalMessage = `Entrevista finalizada.\nPuntuación final: ${responseData.total_score}\nNivel alcanzado: ${responseData.level}`;
       setMessages(prevMessages => [
         ...prevMessages,
-        { sender: 'bot', text: 'Error sending message' }
+        { sender: 'bot', text: finalMessage }
       ]);
-      console.error('Error:', error);
+      setIsInterviewFinished(true);
+    } else {
+      // Mostrar la retroalimentación y la siguiente pregunta
+      setMessages(prevMessages => [
+        ...prevMessages,
+        { sender: 'bot', text: responseData.feedback }
+      ]);
+
+      if (responseData.score) {
+        setMessages(prevMessages => [
+          ...prevMessages,
+          { sender: 'bot', text: `Puntuación: ${responseData.score}` }
+        ]);
+      }
+
+      // Actualizar con la siguiente pregunta
+      setQuestionId(responseData.question_id);  // Actualizamos el `question_id`
+      setMessages(prevMessages => [
+        ...prevMessages,
+        { sender: 'bot', text: responseData.question }
+      ]);
     }
-  };
+  } catch (error) {
+    setMessages(prevMessages => [
+      ...prevMessages,
+      { sender: 'bot', text: 'Error al enviar la respuesta.' }
+    ]);
+    console.error('Error:', error);
+  }
+};
+
+  
 
   // useEffect para scroll automático en la ventana de chat
   useEffect(() => {

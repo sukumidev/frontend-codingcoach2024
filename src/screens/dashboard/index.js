@@ -5,7 +5,7 @@ import ScoreProgressChart from './ScoreProgressChart.js';
 import PreferredLanguagesChart from './PreferredLanguagesChart.js';
 import ScoreByTechnologyChart from './ScoreByTechnologyChart.js';
 import ProfilesPieChart from './ProfilesPieChart.js';
-import UserInterviews from './UserInterviews.js'; 
+import UserInterviewSummary from './UserInterviewSummary.js'; 
 
 function Dashboard() {
   return (
@@ -28,7 +28,7 @@ function Dashboard() {
       </div>
 
       <section className="interviews-section">
-        <UserInterviews />
+      <UserInterviewSummary />
       </section>
     </div>
   );
