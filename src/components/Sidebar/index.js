@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartPie, faMessage, faCog } from '@fortawesome/free-solid-svg-icons'; 
+import { faChartPie, faMessage } from '@fortawesome/free-solid-svg-icons'; 
 import { setCurrentPage } from '../../contexts/redux/pageActions'; // Asegúrate de que la ruta sea correcta
 import './styles.sass';
 
@@ -43,13 +43,6 @@ export function SideBar() {
           >
             <FontAwesomeIcon icon={faMessage} />
             <p>Chat</p>
-          </div>
-          <div 
-            className={`${getClassName('Settings')} option`} 
-            onClick={() => handleNavigation('Settings')}
-          >
-            <FontAwesomeIcon icon={faCog} />
-            <p>Settings</p>
           </div>
         </div>
       </div>

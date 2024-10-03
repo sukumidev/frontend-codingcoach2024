@@ -4,6 +4,15 @@ import { faCircleRight } from '@fortawesome/free-solid-svg-icons';
 import './styles.sass';
 import { host } from '../../services/config';
 
+// Definir la clase Mensaje
+class Mensaje {
+  constructor(tipo, mensaje) {
+    this.tipo = tipo;
+    this.mensaje = mensaje;
+    this.enviado = new Date().toLocaleTimeString(); // Hora de envío
+  }
+}
+
 const Chatbot = () => {
   const [step, setStep] = useState(0); // Controla el paso de la entrevista
   const [language, setLanguage] = useState(''); // Almacena el lenguaje
@@ -90,8 +99,7 @@ const Chatbot = () => {
         await sendAnswerToQuestion(input);  // Llamamos a la función aquí
       }
 
-    
-    setInput(''); // Limpiamos el input del usuario después de cada paso
+ setInput(''); // Limpiamos el input del usuario después de cada paso
   };
   
 
@@ -230,8 +238,25 @@ const sendAnswerToQuestion = async (answer) => {
     }
   };
 
+  // Función que aplica estilos según el tipo y contenido del mensaje
+  const getMessageStyle = (msg) => {
+    const lowerCaseText = msg.mensaje?.toLowerCase();
+    
+    if (msg.tipo === 'user') {
+      return 'userMessage message'; // Clase CSS para mensajes del usuario
+    } else if (msg.tipo === 'error') {
+      return 'errorMessage message'; // Clase CSS para mensajes de error del bot
+    } else if (msg.tipo === 'bot') {
+      return 'botMessage message'; // Clase CSS para mensajes de error del bot
+    }
+    else if (lowerCaseText.includes('score')) {
+      return 'scoreMessage message'; // Clase CSS para mensajes de score del bot
+    }
+    return ''; // Clase vacía si no se encuentra coincidencia
+  };
+
   return (
-    <div className="Chatbot">
+ <div className="Chatbot">
   <div className="ChatWindow" ref={chatWindowRef}>
     {messages.map((msg, index) => (
       <div key={index} className={msg.sender === 'bot' ? 'BotMessage' : 'UserMessage'}>
