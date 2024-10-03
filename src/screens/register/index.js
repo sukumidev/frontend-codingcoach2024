@@ -25,7 +25,7 @@ function Register({ onRegisterSuccess }) {
     try {
       const userData = await authRegister(name, email, password, age); 
       setUser(userData);
-      navigate('/dashboard');
+      navigate('/login');
     } catch (error) {
       console.error('Register Error:', error.message);
     }

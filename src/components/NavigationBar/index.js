@@ -31,10 +31,10 @@ export function NavigationBar() {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/login'); // Redirigir a la página de login
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
+    navigate('/login');
 };
 
 
