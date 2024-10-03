@@ -12,13 +12,12 @@ import { NavigationBar } from "./components/NavigationBar";
 import { SideBar } from './components/Sidebar';
 
 // Screens
-import Login from './screens/Login';
-import Register from './screens/Register';
-import Dashboard from './screens/Dashboard';
-//import InterviewSimulator from './components/InterviewSimulator';
-//import CodeEditor from './components/CodeEditor';
-import Loading from './screens/Loading';
-import Chatbot from './screens/Chatbot';
+import Login from './screens/login';
+import Register from './screens/register';
+import Dashboard from './screens/dashboard';
+import InterviewDetails from './screens/interviewdetails';
+import Loading from './screens/loading';
+import Chatbot from './screens/chatbot';
 
 // Custom
 import 'react-toastify/dist/ReactToastify.css';
@@ -52,21 +51,23 @@ export function RouterLayout() {
     <>
       <ToastContainer />
       <TransitionWrapper>
-        <Routes>
-            <Route element={<SimpleLayout />}>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="*" element={<Loading />} />
-            </Route>
-            <Route element={<MainLayout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/chat" element={<Chatbot />} />
-            </Route>
-        </Routes>
+      <Routes>
+          <Route element={<SimpleLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<Loading />} />
+          </Route>
+          <Route element={<MainLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/chat" element={<Chatbot />} />
+            <Route path="/interview/:id" element={<InterviewDetails />} />  {/* Cambiar component a element */}
+          </Route>
+      </Routes>
       </TransitionWrapper>
     </>
   );
 }
+
 
 
 export function App() {

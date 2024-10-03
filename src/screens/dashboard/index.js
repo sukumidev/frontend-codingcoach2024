@@ -1,47 +1,37 @@
 import React from 'react';
 import './styles.sass';
-import { TopicCard } from '../../components/Dashboard/TopicCard';
-import { Topic } from '../../classes/topic'; // Importar la clase Topic
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Importar el componente FontAwesomeIcon
-import { faCode, faPaintBrush, faBook } from '@fortawesome/free-solid-svg-icons'; // Importar más íconos
-import BarChart from '../../components/Dashboard/BarChart';
+import UserProgress from './UserProgress.js';
+import ScoreProgressChart from './ScoreProgressChart.js';
+import PreferredLanguagesChart from './PreferredLanguagesChart.js';
+import ScoreByTechnologyChart from './ScoreByTechnologyChart.js';
+import ProfilesPieChart from './ProfilesPieChart.js';
+import UserInterviewSummary from './UserInterviewSummary.js'; 
 
 function Dashboard() {
-  // Crear varios ejemplos de Topic
-    const topics = [
-        new Topic(
-        <FontAwesomeIcon icon={faCode} />, // Usar ícono de FontAwesome
-        'Coding',                          // Título del topic
-        75,                                // Porcentaje de progreso
-        'Aprende a programar con proyectos prácticos.', // Descripción
-        '#4caf50'                          // Color de fondo del ícono
-        ),
-        new Topic(
-        <FontAwesomeIcon icon={faPaintBrush} />, // Usar otro ícono de FontAwesome
-        'Arte Digital',                         // Título del topic
-        50,                                     // Porcentaje de progreso
-        'Explora técnicas de ilustración digital.', // Descripción
-        '#ff5722'                               // Color de fondo del ícono
-        ),
-        new Topic(
-        <FontAwesomeIcon icon={faBook} />,     // Otro ícono
-        'Literatura',                          // Título del topic
-        90,                                    // Porcentaje de progreso
-        'Sumérgete en el mundo de la literatura clásica.', // Descripción
-        '#3f51b5'                              // Color de fondo del ícono
-        )
-    ];
-
-    return (
-        <div className='Dashboard'>
-            <div className='Topics'>
-                {topics.map((topic, index) => (
-                    <TopicCard key={index} topic={topic} /> // Iterar sobre los topics y renderizar TopicCard
-                ))}
-            </div>
-            <BarChart />
+  return (
+    <div className="Dashboard">
+      <h2>Dashboard</h2>
+      <div className="dashboard-grid">
+        {/* Gráficas organizadas en 2 columnas */}
+        <div className="chart-container">
+          <ProfilesPieChart />
         </div>
-    );
+        <div className="chart-container">
+            <PreferredLanguagesChart />
+        </div>
+        <div className="chart-container">
+          <ScoreByTechnologyChart />  {/* Gráfico de puntaje por tecnología */}
+        </div>
+        <div className="chart-container">
+           <ScoreProgressChart /> {/* Gráfico de pastel para perfiles */}
+        </div>
+      </div>
+
+      <section className="interviews-section">
+      <UserInterviewSummary />
+      </section>
+    </div>
+  );
 }
 
 export default Dashboard;
